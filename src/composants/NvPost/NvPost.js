@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import axios from 'axios'
 import './NvPost.css'
 
 class NvPost extends Component {
@@ -9,7 +9,22 @@ class NvPost extends Component {
         content: '',
         author: 'Hugo'
     }
-
+    postArticle =()=>{
+        const nvPost= {
+            title :this.state.title,
+            body : this.state.content,
+            auteur:this.state.author
+        }
+        axios.post('https://jsonplaceholder.typicode.com/posts',nvPost)
+        .then(response =>{
+            console.log(response)
+        })
+        this.setState({
+            title: '',
+            content: '',
+            author: 'Hugo'
+        })
+    }
     render () {
         return (
             <div className="NvPost form-group">
@@ -24,7 +39,9 @@ class NvPost extends Component {
                     <option value="Juliette">Juliette</option>
                     <option value="John">John</option>
                 </select>
-                <button className="btn btn-success my-3">Ajouter un Article</button>
+                <button className="btn btn-success my-3"
+                onClick={this.postArticle}
+                >Ajouter un Article</button>
             </div>
         );
     }
